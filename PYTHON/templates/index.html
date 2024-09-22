@@ -41,9 +41,53 @@
                 padding: 20px;
             }  
 
-            section{
-                padding: 1%;
+            .contenedor{
+                display: flex;  /* Flexbox para alinear en fila */
+                justify-content: flex-start;  /* Alineación de izquierda a derecha */
+                gap: 5%; /* Espacio entre las secciones */
             }
+
+            section{
+                width: 30%;  /* Cada sección ocupa el 30% del ancho */
+                padding: 10px;
+                background-color: rgb(44, 164, 162);
+                border: 12px solid #0bab96;
+                text-align: center;
+                border-radius: 100px 100px 10px 10px;
+                overflow: hidden; 
+                transition: border 0.5s ease;
+            }
+
+            section:hover{
+              border: 12px solid #99f1e5;
+              
+            }
+
+            h3{
+              font-family: fantasy;
+            }
+
+            h3:hover{
+              text-shadow: rgb(255, 255, 255) -1px 0, rgb(0, 0, 255) 1px 0;
+              font-family: fantasy;
+            }
+
+            h4{
+              font-family: Monospace;
+            }
+
+            .table {
+              border-radius: 10px; 
+              overflow: hidden; 
+          }
+  
+          .table thead th {
+              border-top: 0; 
+          }
+  
+          .table tbody tr {
+              border-bottom: 1px solid #dee2e6; 
+          }
         </style>
     </head>
     <body>
@@ -52,41 +96,44 @@
         {% block contenido %}
         <header>
             <h1>Maquina de Ensamblajes</h1>
+            <div class="input-group mb-3">
+              <form action="/LeerXml" method="post" enctype="multipart/form-data"></form>
+                <input type="file" class="form-control" id="inputGroupFile01" name="archivo">
+                <button type="submit" class="btn btn-primary" style="color: rgb(255, 255, 255); background: rgb(0, 0, 0)">Subir</button>
+              </form>
+            </div> 
         </header>
         <main>
+          <div class="contenedor">
             <section>
-              <div class="input-group mb-3">
-                <form action="/LeerXml" method="post" enctype="multipart/form-data"></form>
-                  <input type="file" class="form-control" id="inputGroupFile01">
-                  <button type="submit" class="btn btn-primary" style="color: rgb(255, 255, 255); background: rgb(0, 0, 0)">Subir</button>
-                </form>
-              </div> 
-               
+              <h3>Informacion de la Maquina</h3>
+                <h4 class="list-group-item list-group-item-info">Nombre Producto n</h4>
+                <h4 class="list-group-item list-group-item-info">Cantidad de Lineas n</h4>
+                <h4 class="list-group-item list-group-item-info">Cantidad de Componentes n</h4>
+                <h4 class="list-group-item list-group-item-info">Tiempo de Ensamblaje n</h4>
             </section>
-
             <section>
-                <h3>Componentes Necesarios</h3>
-                <h6>Componente 1</h6>
-                <ol>
-                  <li>Elemento1</li>
-                  <li>Elemento2</li>
-                  <li>Elemento3</li>
-                </ol>
-                <h6>Componente 2</h6>
-                <ul>
-                  <li>Elemento1</li>
-                  <li>Elemento2</li>
-                  <li>Elemento3</li>
+              <h3>Listado de Productos</h3>
+                <ul class="list-group">
+                  <li class="list-group-item list-group-item-primary">Producto 1</li>
+                  <ul class="list-group">
+                    <li class="list-group-item">Elaboracion 1</li>
+                  </ul>
+                  <li class="list-group-item list-group-item-primary">Producto 2</li>
+                    <ul class="list-group">
+                      <li class="list-group-item">Elaboracion 2</li>
+                    </ul>
+                  <li class="list-group-item list-group-item-primary">Producto n</li>
+                    <ul class="list-group">
+                      <li class="list-group-item">Elaboracion n</li>
+                    </ul>
                 </ul>
             </section>
         
             <section>
+              <h3>Tabla de Estados</h3>
                 <table class="table table-hover">
                   <thead class="table-dark">
-                    <tr>
-                        <th>TABLA</th>
-                      </tr>
-                    <tr>
                       <th>Tiempo</th>
                       <th>Linea 1</th>
                       <th>Linea 2</th>
@@ -111,12 +158,7 @@
                   </tbody>
                 </table>
             </section>
-
-            <section>
-                <div>
-                    <h2></h2>
-                </div>
-            </section>
+          </div>
         </main>
         {% endblock %}
     </body>

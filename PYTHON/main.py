@@ -65,7 +65,7 @@ def LeerXml():
             print("->   Nombre Producto: " , n_nom)
             print("->   Elaboracion: " , n_elaboracion)
             print("====================================================================")'''
-        ListaM.imprimir()        
+            ListaM.imprimir()        
     except Exception as e:
         return str(e)
     
