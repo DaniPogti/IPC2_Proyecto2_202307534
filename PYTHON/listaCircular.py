@@ -29,12 +29,12 @@ class ListaMaquinas:
                   f"Cantidad de Líneas: {actual.ctdLinea}, "
                   f"Cantidad de Componentes: {actual.ctdComponente}, "
                   f"Tiempo de Ensamblaje: {actual.tiempo}")
-            if actual.ListProducto is not None:
+            if actual.ListProducto is None:    
+                print("No hay productos asociados.")
+                actual = actual.siguiente
+            else:
                 print("Productos asociados:")
                 actual.ListProducto.imprimir()
-            else:
-                print("No hay productos asociados.")
-            actual = actual.siguiente
             if actual == self.cabeza:
                 break       
 

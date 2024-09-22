@@ -31,12 +31,23 @@ def LeerArchivo(rutaArchivo):
     maquinas = root.getElementsByTagName('Maquina')
     
     for maquina in maquinas:
-        nomMaquinas = maquina.getElementsByTagName('NombreMaquina')[0].firstChild.nodeValue
-        cantidadLineas = maquina.getElementsByTagName('CantidadLineasProduccion')[0].firstChild.nodeValue
-        cantidadComponentes = maquina.getElementsByTagName('CantidadComponentes')[0].firstChild.nodeValue
-        tiempo = maquina.getElementsByTagName('TiempoEnsamblaje')[0].firstChild.nodeValue
+        nomMaquinas = maquina.getElementsByTagName('NombreMaquina')
+        for nombre in nomMaquinas:
+            n_Maquina = str(nombre.firstChild.nodeValue)
+            
+        cantidadLineas = maquina.getElementsByTagName('CantidadLineasProduccion')
+        for Lineas in cantidadLineas:
+            n_Lieneas = int(Lineas.firstChild.nodeValue)
+            
+        cantidadComponentes = maquina.getElementsByTagName('CantidadComponentes')
+        for componentes in cantidadComponentes:
+            n_Componentes = int(componentes.firstChild.nodeValue)
+            
+        tiempo = maquina.getElementsByTagName('TiempoEnsamblaje')
+        for time in tiempo:
+            n_Tiempo = int(time.firstChild.nodeValue)
         
-        nuevaMaquina = ListaM.insertarMaquina(nomMaquinas, cantidadLineas, cantidadComponentes, tiempo)
+        nuevaMaquina = ListaM.insertarMaquina(n_Maquina, n_Lieneas, n_Componentes, n_Tiempo)
         
         ListaP = ListaProductos()
         
@@ -44,9 +55,15 @@ def LeerArchivo(rutaArchivo):
         for producs in ListaProducto:
             producto = producs.getElementsByTagName('Producto')
             for elements in producto:
-                nombre = elements.getElementsByTagName('nombre')[0].firstChild.nodeValue
-                elaboracion = elements.getElementsByTagName('elaboracion')[0].firstChild.nodeValue
-                ListaP.insertarProductos(nombre, elaboracion)
+                nombre = elements.getElementsByTagName('nombre')
+                for nom in nombre:
+                    n_nom= str(nom.firstChild.nodeValue)
+                    
+                elaboracion = elements.getElementsByTagName('elaboracion')
+                for elabor in elaboracion:
+                    n_elaboracion= elabor.firstChild.nodeValue
+                    
+                ListaP.insertarProductos(n_nom, n_elaboracion)
         nuevaMaquina.ListProducto = ListaP #signamos la lista de productos a la maquina actual 
     ListaM.imprimir()
     return ListaM
