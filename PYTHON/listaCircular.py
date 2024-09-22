@@ -25,6 +25,7 @@ class ListaMaquinas:
 
         actual = self.cabeza
         while True:
+            print("=========================================================================================================")
             print(f"Nombre: {actual.nombre}, "
                   f"Cantidad de Líneas: {actual.ctdLinea}, "
                   f"Cantidad de Componentes: {actual.ctdComponente}, "
@@ -61,8 +62,8 @@ class ListaProductos:
 
         actual = self.cabeza
         while True:
-            print(f"    Producto Nombre: {actual.nombre}")
-            print(f"    Elaboración: {actual.elaboracion}")
+            print(f"     -> Producto Nombre: {actual.nombre}")
+            print(f"            -> Elaboración: {actual.elaboracion}")
             actual = actual.siguiente
             if actual == self.cabeza:
                 break

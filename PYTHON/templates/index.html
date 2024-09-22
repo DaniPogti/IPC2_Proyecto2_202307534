@@ -24,7 +24,7 @@
               font-family: Arial, Helvetica, sans-serif;
               margin: 0;
               padding: 0;
-              background-color: #1976a1;
+              background-color: #88a4b1;
             }
 
             header {
@@ -51,13 +51,17 @@
 
         {% block contenido %}
         <header>
-            <h1>Pagina Principal</h1>
+            <h1>Maquina de Ensamblajes</h1>
         </header>
         <main>
             <section>
-                <button type="submit" class="btn btn-warning">Archivo</button>
-                <button type="submit" class="btn btn-warning">Reportes</button>
-                <button type="submit" class="btn btn-warning">Ayuda</button>
+              <div class="input-group mb-3">
+                <form action="/LeerXml" method="post" enctype="multipart/form-data"></form>
+                  <input type="file" class="form-control" id="inputGroupFile01">
+                  <button type="submit" class="btn btn-primary" style="color: rgb(255, 255, 255); background: rgb(0, 0, 0)">Subir</button>
+                </form>
+              </div> 
+               
             </section>
 
             <section>
