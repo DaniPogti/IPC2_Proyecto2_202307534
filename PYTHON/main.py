@@ -70,9 +70,17 @@ def buscaM():
     nombreMaquina = request.form['nombreMaquina']
     maquina = ListaM.buscarMaquina(nombreMaquina)
     if maquina is not None:
-        return redirect(url_for('Maquina', nombreMaquina=maquina.nombre))
+        return redirect(url_for('mostrarMaquina', nombreMaquina=maquina.nombre))
     else:
         return redirect(url_for('index', error="Maquina no encontrada"))
+    
+@app.route('/maquina/<nombreMaquina>')
+def mostrarMaquina(nombreMaquina):
+    maquina = ListaM.buscarMaquina(nombreMaquina)
+    if maquina is not None:
+        return render_template('maquina.html', maquina=maquina)
+    else:
+        return redirect(url_for('index', error="Máquina no encontrada"))
 
 
 if __name__ == '__main__':

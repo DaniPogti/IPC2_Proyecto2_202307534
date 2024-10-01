@@ -36,6 +36,13 @@
                 <button type="submit" class="btn btn-primary">Buscar</button>
             </form>
         </div>
+
+        <h1>Detalles de la Máquina</h1>
+        <p>Nombre: {{ maquina.nombre }}</p>
+        <p>Cantidad de Líneas de Producción: {{ maquina.ctdLinea }}</p>
+        <p>Cantidad de Componentes: {{ maquina.ctdComponente }}</p>
+        <p>Tiempo de Ensamblaje: {{ maquina.tiempo }}</p>
+
         {% endblock %}
     </body>
 </html>
