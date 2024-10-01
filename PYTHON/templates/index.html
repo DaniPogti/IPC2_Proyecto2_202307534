@@ -42,9 +42,9 @@
             }  
 
             .contenedor{
-                display: flex;  /* Flexbox para alinear en fila */
-                justify-content: flex-start;  /* Alineación de izquierda a derecha */
-                gap: 5%; /* Espacio entre las secciones */
+                display: flex;  
+                justify-content: flex-start;  
+                gap: 5%; 
             }
 
             section{
@@ -97,9 +97,9 @@
         <header>
             <h1>Maquina de Ensamblajes</h1>
             <div class="input-group mb-3">
-              <form action="/LeerXml" method="post" enctype="multipart/form-data"></form>
+              <form action="/LeerXml" method="POST" enctype="multipart/form-data">
                 <input type="file" class="form-control" id="inputGroupFile01" name="archivo">
-                <button type="submit" class="btn btn-primary" style="color: rgb(255, 255, 255); background: rgb(0, 0, 0)">Subir</button>
+                <button type="submit" class="btn btn-primary" style="color: rgb(255, 255, 255); background: rgb(168, 165, 165); display: flex">Subir</button>
               </form>
             </div> 
         </header>
@@ -159,6 +159,15 @@
                 </table>
             </section>
           </div>
+          <div class="container">
+            <form id="searchMachineForm" action="/buscar_maquina" method="POST">
+                <div class="mb-3">
+                    <label for="nomMaquina" class="form-label">Buscar Máquina</label>
+                    <input type="text" class="form-control" id="nombreMaquina" name="nombreMaquina" placeholder="Ingrese el nombre de la máquina">
+                </div>
+                <button type="submit" class="btn btn-primary">Buscar</button>
+            </form>
+        </div>
         </main>
         {% endblock %}
     </body>

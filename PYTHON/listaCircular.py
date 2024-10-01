@@ -18,6 +18,33 @@ class ListaMaquinas:
             nodoNuevo.siguiente = self.cabeza
         return nodoNuevo
     
+    def buscarMaquina(self, nombre):
+        if self.cabeza is None:
+            print("lista sin datos")
+            return None
+        
+        actual = self.cabeza
+        while True:
+            if actual.nombre == nombre:
+                print("SI SE ENCONTRO LA MAQUINA")
+                print("=========================================================================================================")
+                print(f"Nombre: {actual.nombre}, "
+                  f"Cantidad de Líneas: {actual.ctdLinea}, "
+                  f"Cantidad de Componentes: {actual.ctdComponente}, "
+                  f"Tiempo de Ensamblaje: {actual.tiempo}")
+                if actual.ListProducto is None:    
+                    print("No hay productos asociados.")
+                    
+                else:
+                    print("Productos asociados:")
+                    actual.ListProducto.imprimir()
+                return actual
+            actual = actual.siguiente
+            if actual == self.cabeza:
+                break
+        print("No se encontro maquina")
+        return None
+    
     def imprimir(self):
         if self.cabeza is None:
             print("La lista está vacía.")
@@ -32,10 +59,11 @@ class ListaMaquinas:
                   f"Tiempo de Ensamblaje: {actual.tiempo}")
             if actual.ListProducto is None:    
                 print("No hay productos asociados.")
-                actual = actual.siguiente
+                
             else:
                 print("Productos asociados:")
                 actual.ListProducto.imprimir()
+            actual = actual.siguiente
             if actual == self.cabeza:
                 break       
 
@@ -44,6 +72,7 @@ class ListaProductos:
         self.cabeza = None
 
     def insertarProductos(self, nombre, elaboracion):
+        
         nodoNuevo = nodo_2(nombre, elaboracion)
         if self.cabeza is None:
             self.cabeza = nodoNuevo
@@ -54,6 +83,21 @@ class ListaProductos:
                 actual = actual.siguiente
             actual.siguiente = nodoNuevo
             nodoNuevo.siguiente = self.cabeza
+    
+    def buscarProducto(self, nombre):
+        if self.cabeza is None:
+            print("lista sin datos")
+            return None
+        
+        actual = self.cabeza
+        while True:
+            if actual.nombre == nombre:
+                return actual
+            actual = actual.siguiente
+            if actual == self.cabeza:
+                break
+        print("No se encontro producto")
+        return None
             
     def imprimir(self):
         if self.cabeza is None:
