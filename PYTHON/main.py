@@ -56,9 +56,6 @@ def LeerXml():
                     elaboracion = elements.getElementsByTagName('elaboracion')
                     for elabor in elaboracion:
                         n_elaboracion= elabor.firstChild.nodeValue.split()
-                        for paso in n_elaboracion:
-                            if paso.startswith('L') and 'C' in paso:
-                                print(f"Paso de elaboración: {paso}")
                     ListaP.insertarProductos(n_nom, n_elaboracion)
             nuevaMaquina.ListProducto = ListaP #signamos la lista de productos a la maquina actual 
         ListaM.imprimir()
@@ -97,7 +94,6 @@ def buscarProducto():
     producto = maquina.ListProducto.buscarProducto(nombreProducto)
     if producto is None:
         return render_template('maquina.html', maquina=maquina, error="Producto no encontrado")
-
     return render_template('maquina.html', maquina=maquina, producto=producto)
 
 if __name__ == '__main__':

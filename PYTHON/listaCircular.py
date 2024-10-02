@@ -73,7 +73,12 @@ class ListaProductos:
 
     def insertarProductos(self, nombre, elaboracion):
         
-        nodoNuevo = nodo_2(nombre, elaboracion)
+        cola_elaboracion = ColaElaboracion()
+        
+        for paso in elaboracion:
+            cola_elaboracion.encolar(paso)
+        
+        nodoNuevo = nodo_2(nombre, cola_elaboracion)
         if self.cabeza is None:
             self.cabeza = nodoNuevo
             nodoNuevo.siguiente = self.cabeza
@@ -111,3 +116,98 @@ class ListaProductos:
             actual = actual.siguiente
             if actual == self.cabeza:
                 break
+
+class NodoCola:
+    def __init__(self, dato):
+        self.dato = dato
+        self.siguiente = None
+
+class ColaElaboracion:
+    def __init__(self):
+        self.cabeza = None
+        self.final = None
+
+    def encolar(self, dato):
+        nuevo_nodo = NodoCola(dato)
+        if self.final is None:
+            self.cabeza = nuevo_nodo
+            self.final = nuevo_nodo
+        else:
+            self.final.siguiente = nuevo_nodo
+            self.final = nuevo_nodo
+
+    def desencolar(self):
+        if self.cabeza is None:
+            return None
+        dato = self.cabeza.dato
+        self.cabeza = self.cabeza.siguiente
+        if self.cabeza is None:
+            self.final = None
+        return dato
+
+    def esta_vacia(self):
+        return self.cabeza is None
+
+    def imprimir(self):
+        actual = self.cabeza
+        while actual is not None:
+            print(f"  -> {actual.dato}")
+            actual = actual.siguiente   
+
+'''class Componentes: #nodo de componentes
+    def __init__(self, nombre, estado):
+        self.nombre = nombre
+        self.estado = estado
+        self.siguiente = None
+        
+class Acciones: #esta es la cola
+    def __init__(self):
+        self.cabeza = None
+        self.final = None
+        
+    def agregar(self, accion):
+        nuevoNodo = Componentes(accion, "moviendose")
+        if self.cabeza is None:
+            self.cabeza = self.final = nuevoNodo
+        else:
+            self.final.siguiente = nuevoNodo
+            self.final = nuevoNodo
+    
+    def eliminar(self):
+        if self.cabeza is None:
+            return None
+        accion = self.cabeza
+        self.cabeza = self.cabeza.siguiente
+        if self.cabeza is None:
+            self.final = None
+        return accion
+    
+    def vacia(self):
+        return self.cabeza is None
+    
+class LineasEnsamblaje:
+    def __init__(self, nombre, estado):
+        self.nombre = nombre
+        self.componente = None
+        self.acciones = Acciones()
+        
+    def agregarComp(self, nombreC):
+        self.componente = Componentes(nombreC, "moviendose")
+        
+    def accion(self):
+        if not self.acciones.vacia():
+            accion = self.acciones.eliminar()
+            print(f"El componente {accion.nombre} se encuentra {accion.estado}")
+            if accion is not None:
+                self.componente.estado = accion.nombre
+                if accion.nombre.startswith("Ensamblar"):
+                    self.componente.estado = "Ensamblado"
+                    # Simular el tiempo de ensamblaje
+                    # Aquí podrías agregar lógica para esperar el tiempo correspondiente
+    
+    def imprimir(self):
+        if self.componente:
+            print(f"{self.nombre}: {self.componente.nombre} - {self.componente.estado}")
+        else:
+            print(f"{self.nombre}: No hay componente")'''
+            
