@@ -28,10 +28,13 @@
 
         {% block contenido %}
         <div class="container">
-            <form id="searchProductForm" action="/buscar_producto" method="POST"></form>
+            <form id="searchProductForm" action="/buscar_producto" method="POST">
+                <!-- Campo oculto para pasar el nombre de la máquina -->
+                <input type="hidden" name="nombreMaquina" value="{{ maquina.nombre }}">
+                
                 <div class="mb-3">
-                    <label for="productName" class="form-label">Buscar Producto</label>
-                    <input type="text" class="form-control" id="productName" name="productName" placeholder="Ingrese el nombre del producto">
+                    <label for="nomProducto" class="form-label">Buscar Producto</label>
+                    <input type="text" class="form-control" id="nombreProducto" name="nombreProducto" placeholder="Ingrese el nombre del producto">
                 </div>
                 <button type="submit" class="btn btn-primary">Buscar</button>
             </form>
@@ -42,6 +45,32 @@
         <p>Cantidad de Líneas de Producción: {{ maquina.ctdLinea }}</p>
         <p>Cantidad de Componentes: {{ maquina.ctdComponente }}</p>
         <p>Tiempo de Ensamblaje: {{ maquina.tiempo }}</p>
+
+        {% if producto %}
+        <h3>Detalles del Producto Encontrado</h3>
+        <p>Nombre del Producto: {{ producto.nombre }}</p>
+        <p>Elaboración: {{ producto.elaboracion }}</p>
+
+        <h3>Tabla de Líneas de Producción</h3>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    {% for i in range(maquina.ctdLinea) %}
+                        <th>Línea {{ i + 1 }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    {% for i in range(maquina.ctdLinea) %}
+                        <td>Contenido para Línea {{ i + 1 }}</td>
+                    {% endfor %}
+                </tr>
+            </tbody>
+        </table>
+        {% elif error %}
+            <p class="text-danger">{{ error }}</p>
+        {% endif %}
 
         {% endblock %}
     </body>
