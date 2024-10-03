@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, url_for, redirect
 from xml.dom import minidom
 from xml.dom.minidom import Document
-from listaCircular import ListaMaquinas, ListaProductos
+from listaCircular import ListaMaquinas, ListaProductos, ListaElaboracion
 
 app = Flask(__name__)
 
@@ -53,10 +53,15 @@ def LeerXml():
                     for nom in nombre:
                         n_nom= str(nom.firstChild.nodeValue.strip())
                         
+                    ListaE = ListaElaboracion()     
                     elaboracion = elements.getElementsByTagName('elaboracion')
                     for elabor in elaboracion:
                         n_elaboracion= elabor.firstChild.nodeValue.split()
-                    ListaP.insertarProductos(n_nom, n_elaboracion)
+                        for e in n_elaboracion:
+                            linea, componente = e.split('C')
+                            ListaE.insertarElaboracion(linea, componente)
+                    ListaP.insertarProductos(n_nom, ListaE)
+            
             nuevaMaquina.ListProducto = ListaP #signamos la lista de productos a la maquina actual 
         ListaM.imprimir()
         print("Archivos leidos con exito")    
@@ -78,7 +83,10 @@ def buscaM():
 def mostrarMaquina(nombreMaquina):
     maquina = ListaM.buscarMaquina(nombreMaquina)
     if maquina is not None:
-        return render_template('maquina.html', maquina=maquina)
+        producto = request.args.get('producto', None)
+        if producto:
+            producto = maquina.ListProducto.buscarProducto(producto)
+        return render_template('maquina.html', maquina=maquina, producto=producto)
     else:
         return redirect(url_for('index', error="Máquina no encontrada"))
 

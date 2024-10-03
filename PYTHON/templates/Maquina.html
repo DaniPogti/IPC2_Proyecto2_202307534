@@ -46,11 +46,15 @@
         <p>Cantidad de Componentes: {{ maquina.ctdComponente }}</p>
         <p>Tiempo de Ensamblaje: {{ maquina.tiempo }}</p>
 
-        {% if producto %}
+        {% if producto and producto.elaboracion %}
         <h3>Detalles del Producto Encontrado</h3>
         <p>Nombre del Producto: {{ producto.nombre }}</p>
-        <p>Elaboración: {{ producto.elaboracion }}</p>
-
+        <p>Elaboración:</p>
+        {% for nodo in producto.elaboracion.iterar() %}
+            <p>Linea {{ nodo.linea }} Componente {{ nodo.componente }}</p>
+            <p>Tiempo {{ nodo.tiempo }}</p>
+        {% endfor %}
+        
         <h3>Tabla de Líneas de Producción</h3>
         <table class="table table-bordered">
             <thead>
