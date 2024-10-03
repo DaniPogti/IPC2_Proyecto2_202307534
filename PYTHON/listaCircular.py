@@ -1,5 +1,5 @@
 from nodo1 import nodo_1
-from nodo2 import nodo_2, nodo_3
+from nodo2 import nodo_2, nodo_3, nodo_4
 
 class ListaMaquinas:
     def __init__(self):
@@ -120,6 +120,7 @@ class ListaProductos:
 class ListaElaboracion:
     def __init__(self):
         self.cabeza = None
+        self.movimientos = ListaMovimientos()
         
     def insertarElaboracion(self, linea, componente, tiempo=None):
         
@@ -134,6 +135,16 @@ class ListaElaboracion:
                 actual = actual.siguiente
             actual.siguiente = nodoNuevo
             nodoNuevo.siguiente = self.cabeza 
+    
+    def movs(self):
+        self.movimientos = ListaMovimientos()  # Reiniciar la lista de movimientos
+        for nodo in self.iterar():
+            linea = nodo.linea
+            cantidad_movimientos = nodo.componente
+            for i in range(1, cantidad_movimientos + 1):
+                movimiento = f"Linea {linea} mov {i}"
+                self.movimientos.insertarMovimiento(movimiento)
+        return self.movimientos
             
     def imprimir(self):
         if self.cabeza is None:
@@ -152,10 +163,60 @@ class ListaElaboracion:
         if actual is None:
             return
         while True:
-            yield actual
+            yield actual #regresa cada nodo de la lista uno por uno, regresa nodo actual y pasa al siguiente
             actual = actual.siguiente
             if actual == self.cabeza:
-                break 
+                break
+            
+    def buscarElaboracion(self, lineaN, componenteN):
+        if self.cabeza is None:
+            print("La lista de elaboración está vacía.")
+            return
+        
+        encontrado = False
+        actual = self.cabeza
+        while True:
+            # Verificamos si es la línea y componente buscados
+            if actual.linea == lineaN and actual.componente == componenteN:
+                encontrado = True
+                # Creamos el contador que va desde 1 hasta el componente encontrado
+                for i in range(1, int(componenteN) + 1):
+                    print(f"Contador: {i}")
+                break  # Salimos del ciclo cuando se encuentra el componente
+            
+            actual = actual.siguiente
+            if actual == self.cabeza:
+                break
+        
+        if not encontrado:
+            print(f"No se encontró la línea {lineaN} con el componente {componenteN}.") 
+ 
+class ListaMovimientos:
+    def __init__(self):
+        self.cabeza = None
+        
+    def insertarMovimiento(self, movimiento):
+        nodoNuevo = nodo_4(movimiento)
+        if self.cabeza is None:
+            self.cabeza = nodoNuevo
+        else: 
+            actual = self.cabeza
+            while actual.siguiente is not None:
+                actual = actual.siguiente
+            actual.siguiente = nodoNuevo
+            
+    def imprimir(self):
+        actual = self.cabeza
+        while actual is not None:
+            print(actual.movimiento)
+            actual = actual.siguiente
+            
+    def iterar(self):
+        actual = self.cabeza
+        while actual is not None:
+            yield actual
+            actual = actual.siguiente
+ 
                
 '''class NodoCola:
     def __init__(self, dato):

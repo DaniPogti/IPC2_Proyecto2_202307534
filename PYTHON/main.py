@@ -59,6 +59,8 @@ def LeerXml():
                         n_elaboracion= elabor.firstChild.nodeValue.split()
                         for e in n_elaboracion:
                             linea, componente = e.split('C')
+                            linea = int(linea[1:])
+                            componente = int(componente)
                             ListaE.insertarElaboracion(linea, componente)
                     ListaP.insertarProductos(n_nom, ListaE)
             
@@ -102,7 +104,10 @@ def buscarProducto():
     producto = maquina.ListProducto.buscarProducto(nombreProducto)
     if producto is None:
         return render_template('maquina.html', maquina=maquina, error="Producto no encontrado")
-    return render_template('maquina.html', maquina=maquina, producto=producto)
+    # Generar los movimientos
+    producto.elaboracion.movs()
+    movimientos = producto.elaboracion.movimientos
+    return render_template('maquina.html', maquina=maquina, producto=producto, movimientos=movimientos)
 
 if __name__ == '__main__':
     app.run(debug=True)
