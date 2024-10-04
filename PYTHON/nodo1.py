@@ -1,4 +1,4 @@
-class nodo_1:
+class nodo_1: #para maquinas
     def __init__(self, nombre, ctdLinea, ctdComponente, tiempo):
         self.nombre = nombre
         self.ctdLinea = ctdLinea

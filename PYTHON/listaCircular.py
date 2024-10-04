@@ -65,7 +65,17 @@ class ListaMaquinas:
                 actual.ListProducto.imprimir()
             actual = actual.siguiente
             if actual == self.cabeza:
-                break       
+                break
+            
+    '''def agregarElaboracionProducto(self, nombre_maquina, producto_nombre, elaboracion_datos):
+        maquina = self.buscarMaquina(nombre_maquina)
+        if maquina:
+            lista_productos = maquina.ListProducto
+            producto = lista_productos.buscarProducto(producto_nombre)
+            if producto:
+                for linea, componente in elaboracion_datos:
+                    # Pasamos el tiempo de la máquina a la elaboración
+                    producto.elaboracion.insertarElaboracion(linea, componente, maquina.tiempo) '''      
 
 class ListaProductos:
     def __init__(self):
@@ -122,7 +132,7 @@ class ListaElaboracion:
         self.cabeza = None
         self.movimientos = ListaMovimientos()
         
-    def insertarElaboracion(self, linea, componente, tiempo=None):
+    def insertarElaboracion(self, linea, componente, tiempo):
         
         nodoNuevo = nodo_3(linea, componente, tiempo)
     
@@ -141,9 +151,16 @@ class ListaElaboracion:
         for nodo in self.iterar():
             linea = nodo.linea
             cantidad_movimientos = nodo.componente
+            tiempo = nodo.tiempo
             for i in range(1, cantidad_movimientos + 1):
                 movimiento = f"Linea {linea} mov {i}"
                 self.movimientos.insertarMovimiento(movimiento)
+                
+                # Si se llega al componente deseado y ensmbla
+                if i == cantidad_movimientos:
+                    for t in range(1, tiempo + 1):
+                        movimiento_ensamblaje = f"Linea {linea} ensamblando {t}"
+                        self.movimientos.insertarMovimiento(movimiento_ensamblaje)
         return self.movimientos
             
     def imprimir(self):
@@ -218,42 +235,3 @@ class ListaMovimientos:
             actual = actual.siguiente
  
                
-'''class NodoCola:
-    def __init__(self, dato):
-        self.dato = dato
-        self.siguiente = None
-
-class ColaElaboracion:
-    def __init__(self):
-        self.cabeza = None
-        self.final = None
-
-    def encolar(self, dato):
-        nuevo_nodo = NodoCola(dato)
-        if self.final is None:
-            self.cabeza = nuevo_nodo
-            self.final = nuevo_nodo
-        else:
-            self.final.siguiente = nuevo_nodo
-            self.final = nuevo_nodo
-
-    def desencolar(self):
-        if self.cabeza is None:
-            return None
-        dato = self.cabeza.dato
-        self.cabeza = self.cabeza.siguiente
-        if self.cabeza is None:
-            self.final = None
-        return dato
-
-    def esta_vacia(self):
-        return self.cabeza is None
-
-    def imprimir(self):
-        actual = self.cabeza
-        while actual is not None:
-            print(f"  -> {actual.dato}")
-            actual = actual.siguiente   
-
-
-            '''

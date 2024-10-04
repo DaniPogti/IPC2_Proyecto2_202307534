@@ -62,6 +62,7 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
+                    <th>Contador</th> 
                     {% for i in range(maquina.ctdLinea) %}
                         <th>Línea {{ i + 1 }}</th>
                     {% endfor %}
@@ -69,16 +70,19 @@
             </thead>
             <tbody>
                 {% for nodo in movimientos.iterar() %}
-                <tr>
-                    {% for i in range(maquina.ctdLinea) %}
-                        <td>
-                            {% if nodo.movimiento.startswith("Linea " ~ (i + 1) ~ " ") %}
-                                <p>{{ nodo.movimiento }}</p>
+                    <tr>
+                        <td>{{ loop.index }}</td> 
+                        {% for i in range(maquina.ctdLinea) %}
+                            {% if nodo.movimiento.startswith("Linea " ~ (i + 1) ~ " ") or nodo.movimiento.startswith("ensamblando") %}
+                                <td>
+                                    <p>{{nodo.movimiento }}</p>
+                                </td>
+                            {% else %}
+                                <td>nada</td>
                             {% endif %}
-                        </td>
-                    {% endfor %}
-                </tr>
-            {% endfor %}
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
     {% elif error %}

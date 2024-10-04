@@ -61,7 +61,7 @@ def LeerXml():
                             linea, componente = e.split('C')
                             linea = int(linea[1:])
                             componente = int(componente)
-                            ListaE.insertarElaboracion(linea, componente)
+                            ListaE.insertarElaboracion(linea, componente, n_Tiempo)
                     ListaP.insertarProductos(n_nom, ListaE)
             
             nuevaMaquina.ListProducto = ListaP #signamos la lista de productos a la maquina actual 
