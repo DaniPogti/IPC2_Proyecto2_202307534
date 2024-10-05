@@ -20,6 +20,13 @@
         ></script>
 
         <style>
+            .compo {
+                display: flex;
+                align-items: center;
+            }
+            .compo section {
+                margin-right: 10px; /* Espacio entre los elementos */
+            }
         </style>
     </head>
     <body>
@@ -39,21 +46,21 @@
             </form>
         </div>
 
-        <h1>Detalles de la Máquina</h1>
-        <p>Nombre: {{ maquina.nombre }}</p>
-        <p>Cantidad de Líneas de Producción: {{ maquina.ctdLinea }}</p>
-        <p>Cantidad de Componentes: {{ maquina.ctdComponente }}</p>
-        <p>Tiempo de Ensamblaje: {{ maquina.tiempo }}</p>
+        <h1 style="text-align: center; background:rgb(7, 48, 49); color:rgb(244, 245, 247)">Detalles de la Máquina</h1>
+        <p style="text-align: center;">Nombre: {{ maquina.nombre }}</p>
+        <p style="text-align: center;">Cantidad de Líneas de Producción: {{ maquina.ctdLinea }}</p>
+        <p style="text-align: center;">Cantidad de Componentes: {{ maquina.ctdComponente }}</p>
+        <p style="text-align: center;">Tiempo de Ensamblaje: {{ maquina.tiempo }}</p>
 
         {% if producto and producto.elaboracion %}
-        <h3>Detalles del Producto Encontrado</h3>
+        <h3 style="text-align: center; background:rgb(7, 48, 49); color:rgb(244, 245, 247)">Detalles del Producto Encontrado</h3>
         <p>Nombre del Producto: {{ producto.nombre }}</p>
         <p>Elaboración:</p>
         {% for nodo in producto.elaboracion.iterar() %}
-        <div class="cont">
-            <section>
+        <div class="compo">
+            <section style="color: aliceblue;">
                 <p>Linea {{ nodo.linea }} Componente {{ nodo.componente }}</p>
-                <p>Tiempo {{ nodo.tiempo }}</p>
+                <!--<p>Tiempo {{ nodo.tiempo }}</p>-->
             </section>
         </div>
         {% endfor %}
@@ -62,29 +69,34 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>Contador</th> 
+                    <th style="background-color: rgb(11, 34, 151); color: rgb(243, 243, 243);">Contador</th> 
                     {% for i in range(maquina.ctdLinea) %}
-                        <th>Línea {{ i + 1 }}</th>
+                        <th style="background-color: rgb(3, 96, 97); color: rgb(243, 243, 243);">Línea {{ i + 1 }}</th>
                     {% endfor %}
                 </tr>
             </thead>
             <tbody>
                 {% for nodo in movimientos.iterar() %}
                     <tr>
-                        <td>{{ loop.index }}</td> 
+                        <td style="background-color: rgb(162, 212, 230);">{{ loop.index }}</td> <!-- Mostrar el índice del bucle -->
                         {% for i in range(maquina.ctdLinea) %}
                             {% if nodo.movimiento.startswith("Linea " ~ (i + 1) ~ " ") or nodo.movimiento.startswith("ensamblando") %}
-                                <td>
-                                    <p>{{nodo.movimiento }}</p>
+                                <td style="background-color: blueviolet;">
+                                    <p>{{ nodo.movimiento }}</p>
                                 </td>
                             {% else %}
-                                <td>nada</td>
+                                <td style="background-color: rgb(158, 165, 201);">No hace nada</td>
                             {% endif %}
                         {% endfor %}
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
+        <p>Tiempo Total: {{ tiempo_total }}</p>
+
+        <form action="/CrearXML" method="POST">
+            <button type="submit" class="btn btn-secondary">Generar XML</button>
+        </form>
     {% elif error %}
         <p class="text-danger">{{ error }}</p>
     {% endif %}

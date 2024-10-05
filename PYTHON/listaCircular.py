@@ -147,6 +147,7 @@ class ListaElaboracion:
             nodoNuevo.siguiente = self.cabeza 
     
     def movs(self):
+        tiempo_total = 0  
         self.movimientos = ListaMovimientos()  # Reiniciar la lista de movimientos
         for nodo in self.iterar():
             linea = nodo.linea
@@ -155,13 +156,47 @@ class ListaElaboracion:
             for i in range(1, cantidad_movimientos + 1):
                 movimiento = f"Linea {linea} mov {i}"
                 self.movimientos.insertarMovimiento(movimiento)
+                tiempo_total += 1  
                 
                 # Si se llega al componente deseado y ensmbla
                 if i == cantidad_movimientos:
                     for t in range(1, tiempo + 1):
                         movimiento_ensamblaje = f"Linea {linea} ensamblando {t}"
                         self.movimientos.insertarMovimiento(movimiento_ensamblaje)
-        return self.movimientos
+                        tiempo_total += 1
+        return self.movimientos, tiempo_total
+    
+    '''def movs(self):
+        self.movimientos = ListaMovimientos()  # Reiniciar la lista de movimientos
+        tiempo_total = 0  # Inicializar la variable tiempo_total
+        
+        # Obtener todos los nodos en una lista para facilitar el manejo secuencial
+        nodos = list(self.iterar())
+        
+        # Variable para controlar si todos los nodos han terminado de ensamblar
+        todos_ensamblados = False
+        
+        while not todos_ensamblados:
+            todos_ensamblados = True  # Asumir que todos están ensamblados hasta que se demuestre lo contrario
+            
+            for nodo in nodos:
+                if nodo.componente > 0:  # Si el nodo aún tiene movimientos por hacer
+                    movimiento = f"Linea {nodo.linea} mov {nodo.componente}"
+                    self.movimientos.insertarMovimiento(movimiento)
+                    tiempo_total += 1  # Incrementar tiempo_total por cada movimiento
+                    nodo.componente -= 1  # Reducir el número de movimientos restantes para el nodo
+                    
+                    # Si el nodo ha llegado a su componente deseado
+                    if nodo.componente == 0:
+                        for t in range(1, nodo.tiempo + 1):
+                            movimiento_ensamblaje = f"Linea {nodo.linea} ensamblando {t}"
+                            self.movimientos.insertarMovimiento(movimiento_ensamblaje)
+                            tiempo_total += 1  # Incrementar tiempo_total por cada ensamblaje
+                    
+                    todos_ensamblados = False  # Aún hay nodos que no han terminado de ensamblar
+                    break  # Mover al siguiente nodo solo después de que el nodo actual haya terminado de ensamblar
+        
+        return self.movimientos, tiempo_total'''
             
     def imprimir(self):
         if self.cabeza is None:
