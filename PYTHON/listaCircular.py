@@ -1,5 +1,7 @@
 from nodo1 import nodo_1
 from nodo2 import nodo_2, nodo_3, nodo_4
+from os import startfile, system
+import os
 
 class ListaMaquinas:
     def __init__(self):
@@ -126,6 +128,38 @@ class ListaProductos:
             actual = actual.siguiente
             if actual == self.cabeza:
                 break
+            
+    def crearGraphviz(self, producto):
+        textoDot = '''
+        digraph TDA {
+            node [shape=circle];
+        '''
+
+        # Crear nodos y conexiones para cada movimiento de elaboración del producto seleccionado
+        movimiento_actual = producto.elaboracion.cabeza
+        while movimiento_actual is not None:
+            mov = movimiento_actual
+            nodo_label = f'L{mov.linea}C{mov.componente}'
+            textoDot += f'    "{nodo_label}" [label="{nodo_label}"];\n'
+
+            if movimiento_actual.siguiente != producto.elaboracion.cabeza:
+                siguiente_mov = movimiento_actual.siguiente
+                siguiente_label = f'L{siguiente_mov.linea}C{siguiente_mov.componente}'
+                textoDot += f'    "{nodo_label}" -> "{siguiente_label}";\n'
+
+            movimiento_actual = movimiento_actual.siguiente
+            if movimiento_actual == producto.elaboracion.cabeza:
+                break
+
+        textoDot += '}'
+
+        # Escribir el archivo .dot
+        with open('grafico.dot', 'w') as file:
+            file.write(textoDot)
+            
+        ruta_dot = '"C:\\Program Files\\Graphviz\\bin\\dot.exe"'
+        system(ruta_dot + ' -Tpdf grafico.dot -o ' + "Grafico" + ".pdf")
+        print("Archivo .dot generado con éxito.")    
 
 class ListaElaboracion:
     def __init__(self):
@@ -145,6 +179,7 @@ class ListaElaboracion:
                 actual = actual.siguiente
             actual.siguiente = nodoNuevo
             nodoNuevo.siguiente = self.cabeza 
+                
     
     def movs(self):
         tiempo_total = 0  
@@ -166,37 +201,6 @@ class ListaElaboracion:
                         tiempo_total += 1
         return self.movimientos, tiempo_total
     
-    '''def movs(self):
-        self.movimientos = ListaMovimientos()  # Reiniciar la lista de movimientos
-        tiempo_total = 0  # Inicializar la variable tiempo_total
-        
-        # Obtener todos los nodos en una lista para facilitar el manejo secuencial
-        nodos = list(self.iterar())
-        
-        # Variable para controlar si todos los nodos han terminado de ensamblar
-        todos_ensamblados = False
-        
-        while not todos_ensamblados:
-            todos_ensamblados = True  # Asumir que todos están ensamblados hasta que se demuestre lo contrario
-            
-            for nodo in nodos:
-                if nodo.componente > 0:  # Si el nodo aún tiene movimientos por hacer
-                    movimiento = f"Linea {nodo.linea} mov {nodo.componente}"
-                    self.movimientos.insertarMovimiento(movimiento)
-                    tiempo_total += 1  # Incrementar tiempo_total por cada movimiento
-                    nodo.componente -= 1  # Reducir el número de movimientos restantes para el nodo
-                    
-                    # Si el nodo ha llegado a su componente deseado
-                    if nodo.componente == 0:
-                        for t in range(1, nodo.tiempo + 1):
-                            movimiento_ensamblaje = f"Linea {nodo.linea} ensamblando {t}"
-                            self.movimientos.insertarMovimiento(movimiento_ensamblaje)
-                            tiempo_total += 1  # Incrementar tiempo_total por cada ensamblaje
-                    
-                    todos_ensamblados = False  # Aún hay nodos que no han terminado de ensamblar
-                    break  # Mover al siguiente nodo solo después de que el nodo actual haya terminado de ensamblar
-        
-        return self.movimientos, tiempo_total'''
             
     def imprimir(self):
         if self.cabeza is None:

@@ -12,6 +12,11 @@ def index():
 
 ListaM = ListaMaquinas()
 
+@app.route('/Ayuda')
+
+def ayuda():
+    return render_template('ayuda.html')
+
 @app.route('/LeerXml', methods=['POST'])
 
 def LeerXml():
@@ -201,10 +206,23 @@ def CrearXML():
     except Exception as e:
         return str(e)
     
-    
-    
-    
-    
+@app.route('/CrearGrafico', methods=['POST'])
+def CrearGrafico():
+    nombreProducto = request.form['nombreProducto']
+    nombreMaquina = request.form['nombreMaquina']
+    maquina = ListaM.buscarMaquina(nombreMaquina)
+
+    if maquina is None:
+        return redirect(url_for('index', error="Máquina no encontrada"))
+
+    producto = maquina.ListProducto.buscarProducto(nombreProducto)
+    if producto is None:
+        return render_template('maquina.html', maquina=maquina, error="Producto no encontrado")
+
+    # Generar el gráfico para el producto
+    maquina.ListProducto.crearGraphviz(producto)
+
+    return redirect(url_for('mostrarMaquina', nombreMaquina=nombreMaquina))
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -27,6 +27,8 @@
             .compo section {
                 margin-right: 10px; /* Espacio entre los elementos */
             }
+
+            
         </style>
     </head>
     <body>
@@ -93,10 +95,16 @@
             </tbody>
         </table>
         <p>Tiempo Total: {{ tiempo_total }}</p>
-
-        <form action="/CrearXML" method="POST">
-            <button type="submit" class="btn btn-secondary">Generar XML</button>
-        </form>
+        
+            <form action="/CrearXML" method="POST">
+                <button type="submit" class="btn btn-secondary" >Generar XML</button>
+            </form>
+            <form action="/CrearGrafico" method="POST">
+                <input type="hidden" name="nombreMaquina" value="{{ maquina.nombre }}">
+                <input type="hidden" name="nombreProducto" value="{{ producto.nombre }}">
+                <button type="submit" class="btn btn-secondary">Generar Gráfico</button>
+            </form>
+        
     {% elif error %}
         <p class="text-danger">{{ error }}</p>
     {% endif %}
