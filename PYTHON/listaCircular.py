@@ -135,7 +135,6 @@ class ListaProductos:
             node [shape=circle];
         '''
 
-        # Crear nodos y conexiones para cada movimiento de elaboración del producto seleccionado
         movimiento_actual = producto.elaboracion.cabeza
         while movimiento_actual is not None:
             mov = movimiento_actual
@@ -183,7 +182,7 @@ class ListaElaboracion:
     
     def movs(self):
         tiempo_total = 0  
-        self.movimientos = ListaMovimientos()  # Reiniciar la lista de movimientos
+        self.movimientos = ListaMovimientos() 
         for nodo in self.iterar():
             linea = nodo.linea
             cantidad_movimientos = nodo.componente
@@ -235,10 +234,10 @@ class ListaElaboracion:
             # Verificamos si es la línea y componente buscados
             if actual.linea == lineaN and actual.componente == componenteN:
                 encontrado = True
-                # Creamos el contador que va desde 1 hasta el componente encontrado
+                #contador hasta el componente correspondiente
                 for i in range(1, int(componenteN) + 1):
                     print(f"Contador: {i}")
-                break  # Salimos del ciclo cuando se encuentra el componente
+                break  # termina bucle cuendo encuentra componente
             
             actual = actual.siguiente
             if actual == self.cabeza:
