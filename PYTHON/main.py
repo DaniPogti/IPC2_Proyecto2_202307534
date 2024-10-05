@@ -125,12 +125,12 @@ def CrearXML():
         root = doc.createElement('SalidaSimulacion')
         doc.appendChild(root)
 
-        # Iterar sobre las máquinas en la lista `ListaM`
+       #recorre la lista de maquinas
         actual = ListaM.cabeza
         while actual is not None:
             maquina = actual
 
-            # Crear el elemento 'Maquina' y agregar sus atributos
+            # Crear la maquina
             maquina_element = doc.createElement('Maquina')
 
             nombre_element = doc.createElement('NombreMaquina')

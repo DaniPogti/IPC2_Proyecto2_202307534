@@ -25,7 +25,7 @@
                 align-items: center;
             }
             .compo section {
-                margin-right: 10px; /* Espacio entre los elementos */
+                margin-right: 10px;
             }
 
             
@@ -37,7 +37,7 @@
         {% block contenido %}
         <div class="container">
             <form id="searchProductForm" action="/buscar_producto" method="POST">
-                <!-- Campo oculto para pasar el nombre de la máquina -->
+            
                 <input type="hidden" name="nombreMaquina" value="{{ maquina.nombre }}">
                 
                 <div class="mb-3">
@@ -62,7 +62,6 @@
         <div class="compo">
             <section style="color: aliceblue;">
                 <p>Linea {{ nodo.linea }} Componente {{ nodo.componente }}</p>
-                <!--<p>Tiempo {{ nodo.tiempo }}</p>-->
             </section>
         </div>
         {% endfor %}
@@ -71,7 +70,7 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th style="background-color: rgb(11, 34, 151); color: rgb(243, 243, 243);">Contador</th> 
+                    <th style="background-color: rgb(11, 34, 151); color: rgb(243, 243, 243);">Tiempo</th> 
                     {% for i in range(maquina.ctdLinea) %}
                         <th style="background-color: rgb(3, 96, 97); color: rgb(243, 243, 243);">Línea {{ i + 1 }}</th>
                     {% endfor %}
@@ -80,7 +79,7 @@
             <tbody>
                 {% for nodo in movimientos.iterar() %}
                     <tr>
-                        <td style="background-color: rgb(162, 212, 230);">{{ loop.index }}</td> <!-- Mostrar el índice del bucle -->
+                        <td style="background-color: rgb(162, 212, 230);">{{ loop.index }}</td> <!-- muestra el indice de un bucle, 1, 2, 3, 4, 5, etc -->
                         {% for i in range(maquina.ctdLinea) %}
                             {% if nodo.movimiento.startswith("Linea " ~ (i + 1) ~ " ") or nodo.movimiento.startswith("ensamblando") %}
                                 <td style="background-color: blueviolet;">
